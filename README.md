@@ -1,5 +1,5 @@
 # TodoApp
-VueJS, Stylized Components
+VueJS, Stylized Components  
 Backend provided by: https://jsonbin.io/
 
 ## Manual / Localhost install
