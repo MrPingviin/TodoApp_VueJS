@@ -4,19 +4,19 @@ Backend provided by: https://jsonbin.io/
 
 ## Manual / Localhost install
 
-`GIT CLONE https://github.com/MrPingviin/TodoApp_VueJS.git`
+`GIT CLONE https://github.com/MrPingviin/TodoApp_VueJS.git`  
 Open the terminal, paste this code and run it.
 
-`cd TodoApp_VueJS`
+`cd TodoApp_VueJS`  
 Open the project's folder.
 
-`NPM INSTALL`
+`NPM INSTALL`  
 Run this command to install all of the dependencies.
 
-`NPM RUN DEV`
+`NPM RUN DEV`  
 Run this command to start the local dev server.
 
-`http://localhost:5173/`
+`http://localhost:5173/`  
 After that use this link to reach the live demo.
 
 ## Live Demo without installing.
