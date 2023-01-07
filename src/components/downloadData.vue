@@ -14,7 +14,7 @@ export default {
             }
           fetch("https://api.jsonbin.io/v3/b/63b94662dfc68e59d57bb597/latest", options).then(r => r.json()).then(data => {
                 console.log("DATA ", data.record)
-                data.record.map(item => {
+                data.record.map((item: any) => {
                     todoContainer.push(item)
                 })
                 console.log(todoContainer)
