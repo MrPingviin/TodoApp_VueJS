@@ -55,7 +55,9 @@ export default {
         }
       })
 
-      return newContainerToUpload, this.todoContainer = newContainerToUpload;
+      this.todoContainer = newContainerToUpload;
+
+      return newContainerToUpload;
     },
     async delTodo(id: any, event: any) {
       event.target.parentElement.parentElement.parentElement.remove()
