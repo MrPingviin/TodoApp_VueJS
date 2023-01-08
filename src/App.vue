@@ -172,6 +172,21 @@ z-index: 999;
   width: 2.5rem;
 }
 
+#CardSection {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+  padding: 2rem;
+}
+
+#CardSection-Cardholder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 3rem;
+}
+
 #DataInputSection {
   display: flex;
   flex-direction: column;
@@ -189,7 +204,7 @@ z-index: 999;
 
 #todoAdderSection-Content, #CardSection-Content, #CardSection-Cardholder {
   opacity: 0;
-  animation: popup 0.5s linear forwards;
+  animation: popup 0.65s linear forwards;
 }
 
 @keyframes popup {
@@ -236,15 +251,6 @@ select:focus {
 
 #prioritySelector:hover {
   cursor: pointer;
-}
-
-#CardSection {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 3rem;
-  padding: 2rem;
-  justify-content: center;
-
 }
 
 #Priority-Title {
