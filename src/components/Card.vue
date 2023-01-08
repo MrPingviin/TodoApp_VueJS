@@ -3,12 +3,12 @@ export default {
     props: ["task", "priority", "id"],
     data() {
         return {
+
         }
     },
     methods: {
         deleteTodo(event: any) {
-            console.log(event.target.parentElement.parentElement.parentElement.remove());
-            this.$emit("deleteEvent", this.id);
+            this.$emit("deleteEvent", this.id, event);
         }
     }
 }

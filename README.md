@@ -1,6 +1,6 @@
 # TodoApp
 VueJS, Stylized Components  
-Backend provided by: https://jsonbin.io/
+Backend provided by: https://extendsclass.com/jsonstorage/
 
 ## Manual / Localhost install
 

@@ -15,63 +15,62 @@ export default {
       todoPriority: ref(""),
       loadTodos: ref(0),
       todoContainer: todoContainer,
+      isLoading: true
     }
   },
   methods: {
     refresh() {
       this.loadTodos += 1;
-      console.log(this.loadTodos)
+      console.log(this.loadTodos);
+      this.isLoading = false;
     },
-    addNewTodo() {
-     if ((this.todoTask.length > 3) && (this.todoPriority != undefined) && (this.todoPriority != "")) {
-      const newTodo = { "id": idGenerator(), "task": `${this.todoTask}`, "priority": `${this.todoPriority}` };
-      this.todoContainer.push(newTodo)
-      console.log(this.todoContainer)
-      const options = {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          "X-Master-Key": "$2b$10$kwAPpRW53n.o7e0GutygO.YA3H8QpE8tB4.VofGOCmIZ09G/lWgLS",
-          "X-ACCESS-KEY": "$2b$10$CFodaMc5i9emUkCAn5UYXePYzrjMk7GBmfDjc88qZqOi3/k.zK37G"
-        },
-        body: JSON.stringify(this.todoContainer)
+    async addNewTodo() {
+      if ((this.todoTask.length > 3) && (this.todoPriority != undefined) && (this.todoPriority != "")) {
+        this.isLoading = true;
+        const newTodo = { "id": idGenerator(), "task": `${this.todoTask}`, "priority": `${this.todoPriority}` };
+        this.todoContainer.push(newTodo)
+        console.log(this.todoContainer)
+        const options = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            "Security-Key": "todoApp"
+          },
+          body: JSON.stringify(this.todoContainer)
+        }
+        return (
+          await fetch("https://json.extendsclass.com/bin/a2dc17596b79", options), this.isLoading = false,
+          this.todoTask = "",
+          this.todoPriority = ""
+        )
       }
-      fetch("https://api.jsonbin.io/v3/b/63b94662dfc68e59d57bb597", options).then(r => r.json()).then(data => {
-        console.log(todoContainer[0])
-        console.log("Upload completed. New data was added: ", newTodo);
-      })
-      this.todoTask = "";
-      this.todoPriority = "";
-      return this.loadTodos += 1;
-     }
     },
-    delTodo(id: any) {
-
-      const targetID = id;
-      const newContainerToUpload: any[] = [];
+    filterContainer(id: any) {
+      let newContainerToUpload: any[] = [];
+      newContainerToUpload = [];
 
       this.todoContainer.filter(item => {
-        if (item.id != targetID) {
+        if (item.id != id) {
           newContainerToUpload.push(item);
         }
       })
 
+      return newContainerToUpload, this.todoContainer = newContainerToUpload;
+    },
+    async delTodo(id: any, event: any) {
+      event.target.parentElement.parentElement.parentElement.remove()
+      this.isLoading = true;
       const options = {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
-          "X-Master-Key": "$2b$10$kwAPpRW53n.o7e0GutygO.YA3H8QpE8tB4.VofGOCmIZ09G/lWgLS",
-          "X-ACCESS-KEY": "$2b$10$CFodaMc5i9emUkCAn5UYXePYzrjMk7GBmfDjc88qZqOi3/k.zK37G"
+          "Security-Key": "todoApp"
         },
-        body: JSON.stringify(newContainerToUpload)
+        body: JSON.stringify(this.filterContainer(id))
       }
-    fetch("https://api.jsonbin.io/v3/b/63b94662dfc68e59d57bb597", options).then(r => r.json()).then(data => {
+      await fetch("https://json.extendsclass.com/bin/a2dc17596b79", options)
+      return this.refresh(), this.isLoading = false;
 
-      })
-      this.todoTask = "";
-      this.todoPriority = "";
-      console.log("Delete completed")
-      return this.loadTodos += 1; 
     },
     scrollToTop() {
       window.location.href = "#Main"
@@ -96,36 +95,40 @@ export default {
       <div id="todoAdderSection">
         <div id="todoAdderSection-Content">
           <div id="DataInputSection">
-          <div id="TitleSection">
-          <h1>Todo App made with </h1>
-          <div>
-            <img src="./assets/vue.svg" alt="VueJS logo.">
-            <h1>ue</h1>
-          </div>
-        </div>
+            <div id="TitleSection">
+              <h1>Todo App made with </h1>
+              <div>
+                <img src="./assets/vue.svg" alt="VueJS logo.">
+                <h1>ue</h1>
+              </div>
+            </div>
 
-        <div id="FormSection">
-          <input type="text" placeholder="Write the task here." v-model="todoTask">
-          <div>
-            <label for="priorityOptions" id="Priority-Title">Priority</label>
-            <select name="priorityOptions" id="prioritySelector" v-model="todoPriority">
-              <option value="High">High</option>
-              <option value="Normal">Normal</option>
-              <option value="Low">Low</option>
-            </select>
+            <div id="FormSection">
+              <input type="text" placeholder="Write the task here." v-model="todoTask">
+              <div>
+                <label for="priorityOptions" id="Priority-Title">Priority</label>
+                <select name="priorityOptions" id="prioritySelector" v-model="todoPriority">
+                  <option value="High">High</option>
+                  <option value="Normal">Normal</option>
+                  <option value="Low">Low</option>
+                </select>
+              </div>
+              <Button @changeHappened="addNewTodo">Submit</Button>
+            </div>
           </div>
-          <Button @changeHappened="addNewTodo">Submit</Button>
-        </div>
-      </div>
         </div>
       </div>
 
       <div id="CardSection">
         <div id="CardSection-Content">
-          <h1 id="emptyText" v-bind:value="loadTodos" v-if="todoContainer.length == 0">Here you'll see your todo cards.</h1>
-          <div id="CardSection-Cardholder" v-if="todoContainer.length > 0">
-            <Card @deleteEvent="delTodo" v-for="item of todoContainer" v-bind:value="loadTodos" :task="item.task" :priority="item.priority" :id="item.id" />
+          <h1 id="emptyText" v-bind:value="loadTodos" v-if="todoContainer.length == 0 && !isLoading">Here you'll see
+            your todo cards.
+          </h1>
+          <div id="CardSection-Cardholder" v-if="(todoContainer.length > 0) && !isLoading">
+            <Card @deleteEvent="delTodo" v-for="item of todoContainer" v-bind:value="loadTodos" :task="item.task"
+              :priority="item.priority" :id="item.id" />
           </div>
+          <h2 v-if="isLoading" class="Loading">Loading..</h2>
         </div>
       </div>
     </div>
@@ -153,14 +156,14 @@ export default {
   display: flex;
   gap: 0.5rem;
 }
- 
+
 
 
 #toTopButtonContainer {
-right: 5vw;
-bottom: 5vh;
-position: fixed;
-z-index: 999;
+  right: 5vw;
+  bottom: 5vh;
+  position: fixed;
+  z-index: 999;
 }
 
 #toTopButton {
@@ -187,6 +190,14 @@ z-index: 999;
   gap: 3rem;
 }
 
+#CardSection-Content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+
+}
+
 #DataInputSection {
   display: flex;
   flex-direction: column;
@@ -202,7 +213,9 @@ z-index: 999;
   background-color: rgb(40, 40, 40);
 }
 
-#todoAdderSection-Content, #CardSection-Content, #CardSection-Cardholder {
+#todoAdderSection-Content,
+#CardSection-Content,
+#CardSection-Cardholder {
   opacity: 0;
   animation: popup 0.65s linear forwards;
 }
@@ -256,6 +269,24 @@ select:focus {
 #Priority-Title {
   font-weight: bold;
   font-size: 1.2rem;
+}
+
+.Loading {
+  animation: LoadAnim 2s linear infinite;
+}
+
+@keyframes LoadAnim {
+  0% {
+    font-size: 2rem;
+  }
+
+  50% {
+    font-size: 2.5em;
+  }
+
+  100% {
+    font-size: 2rem;
+  }
 }
 
 @media screen and (max-width: 1050px) {
