@@ -76,8 +76,13 @@ export default {
     },
     scrollToTop() {
       window.location.href = "#Main"
-    }
+    },
+    
   },
+  beforeCreate() {
+    localStorage.clear();
+  }
+
 }
 
 
