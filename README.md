@@ -21,7 +21,7 @@ After that use this link to reach the live demo.
 
 ## Live Demo without installing
 
-https://63b97abd70c53214d8f3f5bc--polite-shortbread-85d94b.netlify.app/
+https://polite-shortbread-85d94b.netlify.app/
 
 
 
