@@ -2,6 +2,7 @@
 import Button from "./components/Button.vue"
 import downloadData from "./components/downloadData.vue";
 import Card from "./components/Card.vue";
+import { idGenerator } from "./components/dataContainer";
 import { todoContainer } from "./components/dataContainer";
 import { ref } from "vue"
 
@@ -23,7 +24,7 @@ export default {
     },
     addNewTodo() {
      if ((this.todoTask.length > 3) && (this.todoPriority != undefined) && (this.todoPriority != "")) {
-      const newTodo = { "id": todoContainer.length, "task": `${this.todoTask}`, "priority": `${this.todoPriority}` };
+      const newTodo = { "id": idGenerator(), "task": `${this.todoTask}`, "priority": `${this.todoPriority}` };
       this.todoContainer.push(newTodo)
       console.log(this.todoContainer)
       const options = {
