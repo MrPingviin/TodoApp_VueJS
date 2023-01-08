@@ -92,8 +92,11 @@ export default {
     </div>
     <div id="MainContent">
       <downloadData @downloadComplete="refresh" />
-      <div id="DataInputSection">
-        <div id="TitleSection">
+
+      <div id="todoAdderSection">
+        <div id="todoAdderSection-Content">
+          <div id="DataInputSection">
+          <div id="TitleSection">
           <h1>Todo App made with </h1>
           <div>
             <img src="./assets/vue.svg" alt="VueJS logo.">
@@ -114,10 +117,16 @@ export default {
           <Button @changeHappened="addNewTodo">Submit</Button>
         </div>
       </div>
+        </div>
+      </div>
 
       <div id="CardSection">
-        <h1 id="emptyText" v-bind:value="loadTodos" v-if="todoContainer.length == 0">Here you'll see your todo cards.</h1>
-        <Card @deleteEvent="delTodo" v-for="item of todoContainer" v-bind:value="loadTodos" :task="item.task" :priority="item.priority" :id="item.id" />
+        <div id="CardSection-Content">
+          <h1 id="emptyText" v-bind:value="loadTodos" v-if="todoContainer.length == 0">Here you'll see your todo cards.</h1>
+          <div id="CardSection-Cardholder" v-if="todoContainer.length > 0">
+            <Card @deleteEvent="delTodo" v-for="item of todoContainer" v-bind:value="loadTodos" :task="item.task" :priority="item.priority" :id="item.id" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -144,6 +153,8 @@ export default {
   display: flex;
   gap: 0.5rem;
 }
+ 
+
 
 #toTopButtonContainer {
 right: 5vw;
@@ -167,9 +178,28 @@ z-index: 999;
   width: 100%;
   align-items: center;
   justify-content: center;
-  background-color: lightgreen;
+  color: white;
   gap: 1rem;
   padding: 3rem 0rem;
+}
+
+#todoAdderSection {
+  background-color: rgb(40, 40, 40);
+}
+
+#todoAdderSection-Content, #CardSection-Content, #CardSection-Cardholder {
+  opacity: 0;
+  animation: popup 0.5s linear forwards;
+}
+
+@keyframes popup {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 
