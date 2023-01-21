@@ -31,7 +31,7 @@ export default {
         this.todoContainer.push(newTodo)
         console.log(this.todoContainer)
         const options = {
-          method: "PUT",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             "Security-Key": "todoApp"
@@ -39,7 +39,7 @@ export default {
           body: JSON.stringify(this.todoContainer)
         }
         return (
-          await fetch("https://json.extendsclass.com/bin/a2dc17596b79", options), this.isLoading = false,
+          await fetch("https://api.npoint.io/325fcbc7d56363513c13", options), this.isLoading = false,
           this.todoTask = "",
           this.todoPriority = ""
         )
@@ -63,14 +63,14 @@ export default {
       event.target.parentElement.parentElement.parentElement.remove()
       this.isLoading = true;
       const options = {
-        method: "PUT",
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Security-Key": "todoApp"
         },
         body: JSON.stringify(this.filterContainer(id))
       }
-      await fetch("https://json.extendsclass.com/bin/a2dc17596b79", options)
+      await fetch("https://api.npoint.io/325fcbc7d56363513c13", options)
       return this.refresh(), this.isLoading = false;
 
     },
